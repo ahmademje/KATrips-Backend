@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class DataBayisSeeder extends Seeder
+class A10DataBayisSeeder extends Seeder
 {
     /**
      * Run the database seeds.

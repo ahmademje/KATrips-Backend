@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class StatusPembayaransSeeder extends Seeder
+class A9StatusPembayaransSeeder extends Seeder
 {
     /**
      * Run the database seeds.

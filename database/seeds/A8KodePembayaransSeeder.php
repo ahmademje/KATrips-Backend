@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class KodePembayaransSeeder extends Seeder
+class A8KodePembayaransSeeder extends Seeder
 {
     /**
      * Run the database seeds.

@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class DataKeretaKelasSeeder extends Seeder
+class A12DataKeretaKelasSeeder extends Seeder
 {
     /**
      * Run the database seeds.

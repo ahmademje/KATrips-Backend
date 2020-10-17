@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class StatusTiketsSeeder extends Seeder
+class A7StatusTiketsSeeder extends Seeder
 {
     /**
      * Run the database seeds.

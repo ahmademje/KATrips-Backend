@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class DataPenumpangsSeeder extends Seeder
+class A11DataPenumpangsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
