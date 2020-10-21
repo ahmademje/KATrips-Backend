@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class dataPenumpang extends Model
 {
     protected $table = "data_penumpangs";
+    
     //
 
     public function user(){

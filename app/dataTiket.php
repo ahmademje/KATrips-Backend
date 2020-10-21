@@ -9,6 +9,7 @@ class dataTiket extends Model
     protected $table = "data_tikets";
 
     //
+    
     public function user(){
         return $this->belongsTo('App\User');
     }

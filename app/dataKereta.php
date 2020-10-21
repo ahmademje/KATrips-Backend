@@ -9,6 +9,7 @@ class dataKereta extends Model
     protected $table = 'data_keretas';
 
     //
+    
     public function data_Kelas(){
         return $this->belongsToMany('App\dataKelas');
     }
