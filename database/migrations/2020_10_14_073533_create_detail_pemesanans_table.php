@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDataKeretaKelasTable extends Migration
+class CreateDetailPemesanansTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateDataKeretaKelasTable extends Migration
      */
     public function up()
     {
-        Schema::create('data_kereta_kelas', function (Blueprint $table) {
+        Schema::create('detail_pemesanans', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('penumpang_id')->constrained('data_penumpangs')->onDelete('cascade');
             $table->foreignId('kereta_id')->constrained('data_keretas')->onDelete('cascade');
-            $table->foreignId('kelas_id')->constrained('data_kelas')->onDelete('cascade');
+            $table->foreignId('pemesanan_id')->constrained('data_pemesanans')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateDataKeretaKelasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('data_kereta_kelas');
+        Schema::dropIfExists('detail_pemesanans');
     }
 }

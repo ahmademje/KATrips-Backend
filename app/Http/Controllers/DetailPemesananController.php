@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\detailPemesanan;
+use App\dataTiket;
 use Illuminate\Http\Request;
 
 class DetailPemesananController extends Controller
@@ -47,6 +48,11 @@ class DetailPemesananController extends Controller
     public function show(detailPemesanan $detailPemesanan)
     {
         //
+    }
+
+    public function coba($tiket_id){
+        echo "halo";
+        return $tiket_id;
     }
 
     /**

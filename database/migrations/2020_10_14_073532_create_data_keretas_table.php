@@ -16,6 +16,7 @@ class CreateDataKeretasTable extends Migration
         Schema::create('data_keretas', function (Blueprint $table) {
             $table->id();
             $table->string('kereta_nama', 150);
+            $table->foreignId('tiket_id')->constrained('data_tikets')->onDelete('cascade');
             $table->timestamps();
         });
     }
