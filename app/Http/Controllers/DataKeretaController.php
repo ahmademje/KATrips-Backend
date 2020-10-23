@@ -35,7 +35,28 @@ class DataKeretaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator :: make($request->all(),[
+            'id'=>'required | numeric',
+            'kereta_nama'=>'required | string',
+            'created_at'=>'required | string',
+            'updated_at'=>'required | string',
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors()->toJson(),400);
+        }
+
+        $dataKereta = dataKereta :: create([
+            'id'=>$request->id,
+            'kereta_nama'=>$request->kereta_nama,
+            'created_at'=>$request->created_at,
+            'update_at'=>$request->update_at,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'New dataKelas has successfully created',
+        ],200);
     }
 
     /**
@@ -57,7 +78,7 @@ class DataKeretaController extends Controller
      */
     public function edit(dataKereta $dataKereta)
     {
-        //
+        
     }
 
     /**
@@ -69,9 +90,39 @@ class DataKeretaController extends Controller
      */
     public function update(Request $request, dataKereta $dataKereta)
     {
-        //
-    }
+        $validator = Validator :: make($request -> all(),[
+        
+        'id'=>'required|numeric',
+        'kereta_nama'=>'required|string',
+        'created_at'=>'required|string',
+        'update_at'=>'required|string',
+        ]);
 
+        if ($validator->fails()) {
+            return response()->json($validator->errors()->toJson(),400);
+        }
+
+        $updated = dataKereta :: where('id',$dataKereta->id)
+        ->update([
+            'id'=>$request->id,
+            'kereta_nama'=>$request->kereta_nama,
+            'created_at'=>$request->create_at,
+            'update_at'=>$request->update_at,
+        ]);
+        
+        if ($updated) {
+            return response()->json([
+                'success' => true,
+                'message' => 'dataKereta data updated succesfully'
+            ],200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'dataKereta data cannot be updated'
+            ],500);
+        }
+
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -80,6 +131,26 @@ class DataKeretaController extends Controller
      */
     public function destroy(dataKereta $dataKereta)
     {
-        //
+        $data = dataKereta :: find ($dataKereta -> id );
+
+        if(!$data){
+            return response()->json([
+                'success' => false,
+                'message' => 'dataKereta data not found'
+            ],400);
+        }
+
+        if ($data->delete()) {
+            return response()->json([
+                'success' => true, 
+                'message' => 'dataKereta successfully deleted'
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'dataKereta cannot be deleted'
+            ], 500);
+        }
+        
     }
 }
