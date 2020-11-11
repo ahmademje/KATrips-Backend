@@ -1,14 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 //use Validator;
-use App\User;
+use App\dataUser;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class AuthController extends Controller {
+class UserController extends Controller {
 
     /**
      * Create a new AuthController instance.
@@ -16,7 +18,7 @@ class AuthController extends Controller {
      * @return void
      */
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->middleware('auth:user', ['except' => ['login', 'register']]);
     }
 
     /**
@@ -48,16 +50,18 @@ class AuthController extends Controller {
      */
     public function register(Request $request) {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|between:2,100',
-            'email' => 'required|string|email|max:100|unique:users',
+            'nama' => 'required|string|between:2,150',
+            'email' => 'required|string|email|max:100|unique:data_users',
             'password' => 'required|string|confirmed|min:6',
+            'alamat' => 'required|string|min:6',
+            'tgl_lahir' => 'required|date'
         ]);
 
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
         }
-
-        $user = User::create(array_merge(
+        
+        $user = dataUser::create(array_merge(
                     $validator->validated(),
                     ['password' => bcrypt($request->password)]
                 ));
