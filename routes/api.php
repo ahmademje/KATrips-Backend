@@ -20,13 +20,25 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::group([
-    'middleware' => 'api',
-    'prefix' => 'auth'
+    'middleware' => 'assign.guard:admin',
+    'prefix' => 'admin'
 
 ], function ($router) {
-    Route::post('login', 'AuthController@login');
-    Route::post('register', 'AuthController@register');
-    Route::post('logout', 'AuthController@logout');
-    Route::post('refresh', 'AuthController@refresh');
-    Route::get('user-profile', 'AuthController@userProfile');
+    Route::post('login', 'Api\AdminController@login');
+    Route::post('register', 'Api\AdminController@register');
+    Route::post('logout', 'Api\AdminController@logout');
+    Route::post('refresh', 'Api\AdminController@refresh');
+    Route::get('user-profile', 'Api\AdminController@userProfile');
+});
+
+Route::group([
+    'middleware' => 'assign.guard:user',
+    'prefix' => 'user'
+
+], function ($router) {
+    Route::post('login', 'Api\UserController@login');
+    Route::post('register', 'Api\UserController@register');
+    Route::post('logout', 'Api\UserController@logout');
+    Route::post('refresh', 'Api\UserController@refresh');
+    Route::get('user-profile', 'Api\UserController@userProfile');
 });

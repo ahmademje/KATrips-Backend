@@ -13,6 +13,8 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class User extends Authenticatable implements JWTSubject {
     use Notifiable;
 
+    protected $guard = 'admin';
+
     /**
      * The attributes that are mass assignable.
      *
