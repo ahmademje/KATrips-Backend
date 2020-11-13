@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\dataPemesanan;
+use App\dataUser;
 use Illuminate\Http\Request;
 
 class DataPemesananController extends Controller
@@ -44,10 +46,13 @@ class DataPemesananController extends Controller
      * @param  \App\dataPemesanan  $dataPemesanan
      * @return \Illuminate\Http\Response
      */
-    public function show(dataPemesanan $dataPemesanan)
+    public function show()
     {
-        //
-    }
+        $id = Auth::id();
+
+        $findedData = dataPemesanan::where('user_id', $id)->get();
+        return response()->json($findedData);
+   }
 
     /**
      * Show the form for editing the specified resource.
