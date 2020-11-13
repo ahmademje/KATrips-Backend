@@ -17,7 +17,7 @@ class CreateDataUsersTable extends Migration
             $table->id();
             $table->string('nama', 150);
             $table->string('email', 150)->unique();
-            $table->string('password', 20);
+            $table->string('password', 191);
             $table->string('alamat', 150);
             $table->date('tgl_lahir');
             $table->timestamps();
