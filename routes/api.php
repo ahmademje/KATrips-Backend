@@ -41,4 +41,6 @@ Route::group([
     Route::post('logout', 'Api\UserController@logout');
     Route::post('refresh', 'Api\UserController@refresh');
     Route::get('user-profile', 'Api\UserController@userProfile');
+
+    Route::get('history-pemesanan', 'DataPemesananController@show');
 });
