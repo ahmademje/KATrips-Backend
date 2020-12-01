@@ -61,4 +61,8 @@ class dataUser extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims() {
         return [];
     }
+
+    public function dataPenumpang(){
+        return $this->hasMany(dataPenumpang::class, 'user_id', 'id');
+    }
 }

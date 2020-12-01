@@ -1,11 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\dataTiket;
+use App\dataStasiun;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use DB;
 
-class DataTiketController extends Controller
+class TiketController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -86,20 +89,27 @@ class DataTiketController extends Controller
     public function cariTiket(Request $request){
         $lokasi_berangkat = dataStasiun::select('id')->where('stasiun_nama', $request->input('lokasi_berangkat'))->first();
         $lokasi_tiba = dataStasiun::select('id')->where('stasiun_nama', $request->input('lokasi_tiba'))->first();
-        $tglBerangkat = date("Y-m-d", strtotime($request->tanggal));
+        $tglBerangkat = date("Y-m-d", strtotime($request->tanggal_berangkat));
+
+        
 
         $condition = [
             'lokasi_berangkat' => $lokasi_berangkat->id,
             'lokasi_tiba' => $lokasi_tiba->id
         ];
 
-        $findedTiekts = dataTiket::where($condition)
+        $idFindedTikets = dataTiket::where($condition)
                             ->where(DB::raw("(DATE_FORMAT(waktu_berangkat, '%Y-%m-%d'))"), '=', $tglBerangkat)
-                            ->getTiket();
+                            ->get('id');
+
+        $i = 0;
+        foreach($idFindedTikets as $idFindedTiket){
+            $findedTikets[$i++] = dataTiket::find($idFindedTiket->id)->getTiket();
+        }
         
         return response()->json([
             'message' => 'Finded Tiket',
-            'tikets' => $findedTiekts
+            'tikets' => $findedTikets
         ], 200);
     }
 }

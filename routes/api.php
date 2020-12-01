@@ -29,6 +29,8 @@ Route::group([
     Route::post('logout', 'Api\AdminController@logout');
     Route::post('refresh', 'Api\AdminController@refresh');
     Route::get('user-profile', 'Api\AdminController@userProfile');
+
+    Route::post('tiket/cari', 'Api\TiketController@cariTiket');
 });
 
 Route::group([
