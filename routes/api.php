@@ -19,30 +19,25 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::group([
-    'middleware' => 'assign.guard:admin',
-    'prefix' => 'admin'
-
-], function ($router) {
-    Route::post('login', 'Api\AdminController@login');
+Route::group(['prefix' => 'admin', 'middleware' => 'assign.guard:admin'], function(){
+    Route::post('login', 'Api\AdminController@login')->name('admin.login');
     Route::post('register', 'Api\AdminController@register');
-    Route::post('logout', 'Api\AdminController@logout');
-    Route::post('refresh', 'Api\AdminController@refresh');
-    Route::get('user-profile', 'Api\AdminController@userProfile');
-
-    Route::post('tiket/cari', 'Api\TiketController@cariTiket');
+    Route::group(['middleware' => 'jwt.verify'], function ($router) {        
+            Route::post('logout', 'Api\AdminController@logout');
+            Route::post('refresh', 'Api\AdminController@refresh');
+            Route::get('user-profile', 'Api\AdminController@userProfile');
+            Route::post('tiket/create', 'Api\TiketController@store');
+            Route::post('tiket/cari', 'Api\TiketController@cariTiket');
+    });
 });
 
-Route::group([
-    'middleware' => 'assign.guard:user',
-    'prefix' => 'user'
-
-], function ($router) {
-    Route::post('login', 'Api\UserController@login');
+Route::group(['middleware' => 'assign.guard:user', 'prefix' => 'user'], function ($router) {
+    Route::post('login', 'Api\UserController@login')->name('user.login');
     Route::post('register', 'Api\UserController@register');
-    Route::post('logout', 'Api\UserController@logout');
-    Route::post('refresh', 'Api\UserController@refresh');
-    Route::get('user-profile', 'Api\UserController@userProfile');
-
-    Route::get('history-pemesanan', 'DataPemesananController@show');
+    Route::grou(['middleware' => 'jwt.verify'], function($router) {
+        Route::post('logout', 'Api\UserController@logout');
+        Route::post('refresh', 'Api\UserController@refresh');
+        Route::get('user-profile', 'Api\UserController@userProfile');
+        Route::get('history-pemesanan', 'DataPemesananController@show');
+    });
 });
