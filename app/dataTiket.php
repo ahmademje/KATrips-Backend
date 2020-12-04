@@ -9,8 +9,9 @@ class dataTiket extends Model
     protected $fillable = [
         'waktu_berangkat', 'waktu_tiba',
         'gerbong_kode', 'no_kursi', 'harga',
-        'data_kereta_kelas_id', 'status_id',
-        'lokasi_berangkat', 'lokasi_tiba'
+        'keretakelas_id', 'status_id',
+        'lokasi_berangkat', 'lokasi_tiba',
+        'admin_id'
     ];
 
     public function getTiket(){

@@ -38,7 +38,25 @@ class TiketController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'waktu_berangkat' => 'required',
+            'waktu_tiba' => 'required',
+            'gerbong_kode' => 'required',
+            'no_kursi' => 'required',
+            'harga' => 'required',
+            'keretakelas_id' => 'required',
+            'admin_id' => 'required',
+            'status_id' => 'required',
+            'lokasi_berangkat' => 'required',
+            'lokasi_tiba' => 'required'
+        ]);
+
+        dataTiket::create($request->all());
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Berhasil menambahkan Tiket',
+        ], 200);
     }
 
     /**
@@ -90,8 +108,6 @@ class TiketController extends Controller
         $lokasi_berangkat = dataStasiun::select('id')->where('stasiun_nama', $request->input('lokasi_berangkat'))->first();
         $lokasi_tiba = dataStasiun::select('id')->where('stasiun_nama', $request->input('lokasi_tiba'))->first();
         $tglBerangkat = date("Y-m-d", strtotime($request->tanggal_berangkat));
-
-        
 
         $condition = [
             'lokasi_berangkat' => $lokasi_berangkat->id,
