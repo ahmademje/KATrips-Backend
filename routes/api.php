@@ -26,18 +26,21 @@ Route::group(['prefix' => 'admin', 'middleware' => 'assign.guard:admin'], functi
             Route::post('logout', 'Api\AdminController@logout');
             Route::post('refresh', 'Api\AdminController@refresh');
             Route::get('user-profile', 'Api\AdminController@userProfile');
+            Route::get('tiket', 'Api\TiketController@index');
             Route::post('tiket/create', 'Api\TiketController@store');
-            Route::post('tiket/cari', 'Api\TiketController@cariTiket');
+            Route::put('tiket/{dataTiket}', 'Api\TiketController@update');
+            Route::delete('tiket/{dataTiket}', 'Api\TiketController@destroy');
     });
 });
 
 Route::group(['middleware' => 'assign.guard:user', 'prefix' => 'user'], function ($router) {
     Route::post('login', 'Api\UserController@login')->name('user.login');
     Route::post('register', 'Api\UserController@register');
-    Route::grou(['middleware' => 'jwt.verify'], function($router) {
+    Route::group(['middleware' => 'jwt.verify'], function($router) {
         Route::post('logout', 'Api\UserController@logout');
         Route::post('refresh', 'Api\UserController@refresh');
         Route::get('user-profile', 'Api\UserController@userProfile');
+        Route::post('tiket/cari', 'Api\TiketController@cariTiket');
         Route::get('history-pemesanan', 'DataPemesananController@show');
     });
 });
