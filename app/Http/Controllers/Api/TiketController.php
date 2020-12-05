@@ -17,7 +17,20 @@ class TiketController extends Controller
      */
     public function index()
     {
-        //
+        $tikets = dataTiket::all();
+        if($tikets != null){
+            return response()->json([
+                'success' => true,
+                'Tiket' => $tikets,
+                'message' => 'Semua Tiket Berhasil Didapat',
+            ], 200);
+        }else{
+            return response()->json([
+                'success' => false,
+                'message' => 'Tidak ditemukan Tiket',
+            ], 200);
+        }
+        
     }
 
     /**
@@ -88,9 +101,33 @@ class TiketController extends Controller
      * @param  \App\dataTiket  $dataTiket
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, dataTiket $dataTiket)
-    {
-        //
+    public function update(Request $request,dataTiket $dataTiket)
+    {                
+        $validatedReq = $request->validate([
+            'waktu_berangkat' => 'required',
+            'waktu_tiba' => 'required',
+            'gerbong_kode' => 'required',
+            'no_kursi' => 'required',
+            'harga' => 'required',
+            'keretakelas_id' => 'required',
+            'admin_id' => 'required',
+            'status_id' => 'required',
+            'lokasi_berangkat' => 'required',
+            'lokasi_tiba' => 'required'
+        ]);
+        
+        if($validatedReq){
+            $dataTiket->update($request->all());
+            return response()->json([
+                'success' => true,
+                'message' => 'Berhasil merubah Tiket',
+            ], 200);
+        }else{
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal merubah Tiket',
+            ], 200);
+        }
     }
 
     /**
@@ -101,7 +138,20 @@ class TiketController extends Controller
      */
     public function destroy(dataTiket $dataTiket)
     {
-        //
+        if($dataTiket != null){
+            dataTiket::destroy($dataTiket->id);
+            return response()->json([
+                'success' => true,
+                'message' => 'Berhasil menghapus Tiket',
+            ], 200);
+        }else{
+            return response()->json([
+                'success' => false,
+                'message' => 'Barang Tidak ditemukan',
+            ], 200);
+        }
+
+        
     }
 
     public function cariTiket(Request $request){
