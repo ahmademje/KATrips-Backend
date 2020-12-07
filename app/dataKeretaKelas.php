@@ -18,7 +18,7 @@ class dataKeretaKelas extends Model
         return $this->belongsTo(dataKereta::class, 'kereta_id');
     }
 
-    public function dataTiket(){
-        return $this->hasMany(dataTiket::class);
+    public function perjalanan(){
+        return $this->hasMany(Perjalanan::class);
     }
 }

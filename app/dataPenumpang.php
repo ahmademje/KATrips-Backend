@@ -17,4 +17,8 @@ class dataPenumpang extends Model
     public function dataUser(){
         return $this->belongsTo(dataUser::class);
     }
+
+    public function detailPemesanan(){
+        return $this->hasOne(detailPemesanan::class, 'penumpang_id');
+    }
 }

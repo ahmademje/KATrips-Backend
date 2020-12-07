@@ -10,7 +10,7 @@ class dataStasiun extends Model
         'stasiun_nama'
     ];
 
-    public function dataTiket(){
-        return $this->hasMany(dataTiket::class);
+    public function perjalanan(){
+        return $this->hasMany(Perjalanan::class);
     }
 }

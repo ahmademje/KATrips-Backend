@@ -60,4 +60,8 @@ class User extends Authenticatable implements JWTSubject {
     public function getJWTCustomClaims() {
         return [];
     }
+
+    public function dataTiket(){
+        return $this->hasMany(dataTiket::class, 'admin_id');
+    }
 }
