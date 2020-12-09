@@ -18,6 +18,7 @@ class CreatePerjalanansTable extends Migration
             $table->timestamp('waktu_berangkat', 0)->nullable();
             $table->timestamp('waktu_tiba', 0)->nullable();
             $table->foreignId('keretakelas_id')->constrained('data_kereta_kelas')->onDelete('cascade');
+            $table->integer('harga');
             $table->foreignId('lokasi_berangkat_id')->constrained('data_stasiuns')->onDelete('cascade');
             $table->foreignId('lokasi_tiba_id')->constrained('data_stasiuns')->onDelete('cascade');
             $table->integer('penumpang_tersedia');

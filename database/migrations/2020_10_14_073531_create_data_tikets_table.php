@@ -17,7 +17,6 @@ class CreateDataTiketsTable extends Migration
             $table->id();
             $table->string('gerbong_kode', 150);
             $table->integer('no_kursi');
-            $table->integer('harga');
             $table->foreignId('admin_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('status_id')->constrained('status_tikets')->onDelete('cascade');
             $table->foreignId('perjalanan_id')->constrained('perjalanans')->onDelete('cascade');
