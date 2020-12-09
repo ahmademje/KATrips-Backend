@@ -15,7 +15,8 @@ class CreateDataStasiunsTable extends Migration
     {
         Schema::create('data_stasiuns', function (Blueprint $table) {
             $table->id();
-            $table->string('stasiun_nama', 150);
+            $table->string('nama', 150);
+            $table->string('kode', 10);
             $table->timestamps();
         });
     }

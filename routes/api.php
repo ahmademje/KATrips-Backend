@@ -41,6 +41,7 @@ Route::group(['middleware' => 'assign.guard:user', 'prefix' => 'user'], function
         Route::post('refresh', 'Api\UserController@refresh');
         Route::get('user-profile', 'Api\UserController@userProfile');
         Route::post('tiket/cari', 'Api\TiketController@cariTiket');
+        Route::get('stasiun', 'Api\StasiunController@index');
         Route::get('history-pemesanan', 'DataPemesananController@show');
     });
 });
