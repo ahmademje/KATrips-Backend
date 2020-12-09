@@ -20,6 +20,7 @@ class CreatePerjalanansTable extends Migration
             $table->foreignId('keretakelas_id')->constrained('data_kereta_kelas')->onDelete('cascade');
             $table->foreignId('lokasi_berangkat_id')->constrained('data_stasiuns')->onDelete('cascade');
             $table->foreignId('lokasi_tiba_id')->constrained('data_stasiuns')->onDelete('cascade');
+            $table->integer('penumpang_tersedia');
             $table->timestamps();
         });
     }
