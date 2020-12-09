@@ -109,7 +109,7 @@ class TiketController extends Controller
             'gerbong_kode' => 'required',
             'no_kursi' => 'required',
             'harga' => 'required',
-            'keretakelas_id' => 'required',
+            'perjalanan_id' => 'required',
             'admin_id' => 'required',
             'status_id' => 'required',
             'lokasi_berangkat' => 'required',
@@ -164,18 +164,18 @@ class TiketController extends Controller
             'lokasi_tiba' => $lokasi_tiba->id
         ];
 
-        $idFindedTikets = dataTiket::where($condition)
+        $idPerjalanans = Perjalanan::where($condition)
                             ->where(DB::raw("(DATE_FORMAT(waktu_berangkat, '%Y-%m-%d'))"), '=', $tglBerangkat)
                             ->get('id');
 
         $i = 0;
-        foreach($idFindedTikets as $idFindedTiket){
-            $findedTikets[$i++] = dataTiket::find($idFindedTiket->id)->getTiket();
+        foreach($idPerjalanans as $idPerjalanan){
+            $findedPerjalanan[$i++] = dataTiket::find($idPerjalanan->id)->getTiket();
         }
         
         return response()->json([
             'message' => 'Finded Tiket',
-            'tikets' => $findedTikets
+            'tikets' => $findedPerjalanan
         ], 200);
     }
 }
