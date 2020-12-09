@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class A15DetailPemesanansSeeder extends Seeder
+class A16DetailPemesanansSeeder extends Seeder
 {
     /**
      * Run the database seeds.
