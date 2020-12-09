@@ -7,11 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class dataTiket extends Model
 {
     protected $fillable = [
-        'waktu_berangkat', 'waktu_tiba',
-        'gerbong_kode', 'no_kursi', 'harga',
-        'keretakelas_id', 'status_id',
-        'lokasi_berangkat', 'lokasi_tiba',
-        'admin_id'
+        'gerbong_kode', 'no_kursi',
+        'harga', 'status_id',
+        'admin_id', 'perjalanan_id'
     ];
 
     public function getTiket(){

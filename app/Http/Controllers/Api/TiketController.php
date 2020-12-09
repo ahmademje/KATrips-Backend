@@ -52,16 +52,12 @@ class TiketController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'waktu_berangkat' => 'required',
-            'waktu_tiba' => 'required',
             'gerbong_kode' => 'required',
             'no_kursi' => 'required',
             'harga' => 'required',
-            'keretakelas_id' => 'required',
+            'perjalanan_id' => 'required',
             'admin_id' => 'required',
             'status_id' => 'required',
-            'lokasi_berangkat' => 'required',
-            'lokasi_tiba' => 'required'
         ]);
 
         dataTiket::create($request->all());
@@ -104,16 +100,12 @@ class TiketController extends Controller
     public function update(Request $request,dataTiket $dataTiket)
     {                
         $validatedReq = $request->validate([
-            'waktu_berangkat' => 'required',
-            'waktu_tiba' => 'required',
             'gerbong_kode' => 'required',
             'no_kursi' => 'required',
             'harga' => 'required',
             'perjalanan_id' => 'required',
             'admin_id' => 'required',
             'status_id' => 'required',
-            'lokasi_berangkat' => 'required',
-            'lokasi_tiba' => 'required'
         ]);
         
         if($validatedReq){
