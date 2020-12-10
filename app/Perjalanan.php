@@ -24,6 +24,6 @@ class Perjalanan extends Model
     }
 
     public function dataTiket(){
-        return $this->hasMany(Perjalanan::class);
+        return $this->hasMany(dataTiket::class, 'perjalanan_id');
     }
 }
