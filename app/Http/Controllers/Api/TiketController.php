@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\dataTiket;
+use App\dataBayi;
 use App\dataStasiun;
 use App\Perjalanan;
 use App\dataPenumpang;
@@ -168,15 +169,57 @@ class TiketController extends Controller
 
     public function pesanTiket(Request $request){
         /*
-            Needed Parameter =data Penumpang (nama, no_ktp, bayi_id, id Perjalanan)
+            Needed Parameter =data Penumpang (id_perjalanan, nama_ktp, no_ktp, is_dewasa)
+            {
+                "id_perjalanan": 3,
+                "penumpangs": [
+                    {
+                        "nama_ktp": "ahmad",
+                        "no_ktp": 11111112,
+                        "is_dewasa": true
+                    },
+                    {
+                        "nama_ktp": "maulana",
+                        "no_ktp": 22222222,
+                        "is_dewasa": false
+                    }
+                ]
+            }  
         */
-        
-        $jmlhPenupmang = count($request->penumpangs);
-        $total_harga = 0;
 
-        foreach($request->penumpangs as $penumpang){
-            $total_harga += Perjalanan::where('id', '=', $penumpang['id_perjalanan'])->value('harga');
-        }
+        $total_harga = 0;
+        $jmlhPenumpangDws = 0;
+        $jmlhPenumpangBayi = 0;
+        $dewasaAssigned = false;
+        $bayiAssigned = false;
+        foreach($request['penumpangs'] as $penumpang)
+            {
+                $total_harga += Perjalanan::where('id', '=', $request->id_perjalanan)->value('harga');
+
+                if($penumpang['is_dewasa']){     
+                    $dewasaAssigned = true;          
+                    $dataPenumpang = new dataPenumpang;
+                    $dataPenumpang->nama_ktp = $penumpang['nama_ktp'];
+                    $dataPenumpang->no_ktp = $penumpang['no_ktp'];
+                    if($bayiAssigned) $dataPenumpang->bayi_id = $penumpangBayi[0]->id;
+                    else $dataPenumpang->bayi_id = null;
+                    $dataPenumpang->user_id =  auth()->user()->value('id');
+                    $dataPenumpang->save();
+                    $penumpangDws[$jmlhPenumpangDws++] = $dataPenumpang;
+                }else{
+                    $bayiAssigned = true;
+                    $dataBayi = new dataBayi;
+                    $dataBayi->nama_nik = $penumpang['nama_ktp'];
+                    $dataBayi->no_nik = $penumpang['no_ktp'];
+                    $dataBayi->tgl_lahir = date("Y-m-d");
+                    $dataBayi->save();
+                    if($dewasaAssigned) $penumpangDws[0]->bayi_id = $dataBayi->id;
+                   $penumpangBayi[$jmlhPenumpangBayi++] = $dataBayi;
+                }
+            }
+
+        if(!($bayiAssigned) && $jmlhPenumpangBayi!=0) $dataPenumpang[0]->bayi_id = $penumpangBayi[0]->id;
+
         $dataPemesanan = new dataPemesanan;
         $dataPemesanan->waktu_pesan = date("Y-m-d");
         $dataPemesanan->invoicecetak_no = 1234567;
@@ -186,41 +229,24 @@ class TiketController extends Controller
         $dataPemesanan->user_id = auth()->user()->value('id');
         $dataPemesanan->save();
 
-        for($i = 0; $i<$jmlhPenupmang; $i++){
-            $dataPenumpang = new dataPenumpang;
-            $dataPenumpang->nama_ktp = $request->penumpangs[$i]['nama'];
-            $dataPenumpang->no_ktp = $request->penumpangs[$i]['no_ktp'];
-            $dataPenumpang->bayi_id = $request->penumpangs[$i]['bayi_id'];
-            $dataPenumpang->user_id =  auth()->user()->value('id');
-            $dataPenumpang->save();
-
+        for($i = 0; $i<$jmlhPenumpangDws; $i++){
             $detailPemesanan = new detailPemesanan;
-            $detailPemesanan->penumpang_id = $dataPenumpang->id;
-            $detailPemesanan->tiket_id = $this->getAndUpdateTiketStatus($request->penumpangs[$i]['id_perjalanan']);
+            $detailPemesanan->penumpang_id = $penumpangDws[$i]->id;
+            $detailPemesanan->tiket_id = $this->getAndUpdateTiketStatus($request['id_perjalanan']);
             $detailPemesanan->pemesanan_id = $dataPemesanan->id;
-            $tempDetailPemesanan[$i] = $detailPemesanan;
-            $tempPenumpang[$i] = $dataPenumpang;
             $detailPemesanan->save();
         }
         
         if($dataPemesanan && $dataPenumpang && $detailPemesanan){
             return response()->json([
-                'Data Pemesanan' => $dataPemesanan,
-                'Data Penumpang' => $tempPenumpang,
-                'Detail Pemesanan' => $tempDetailPemesanan,
-                'Jumlah Penumpang' => $jmlhPenupmang,
-                'Iterartion Now' => $i,
-                'success' => true,
+                'data_pemesanan' => $dataPemesanan,
+                'detail_pemesanan' => $detailPemesanan,
+                'isSuccess' => true,
                 'message' => 'Berhasil Memesan Tiket',
             ], 200);
         }else{
             return response()->json([
-                'Data Pemesanan' => $dataPemesanan,
-                'Data Penumpang' => $tempPenumpang,
-                'Detail Pemesanan' => $tempDetailPemesanan,
-                'Jumlah Penumpang' => $jmlhPenupmang,
-                'Iterartion Now' => $i,
-                'success' => false,
+                'isSuccess' => false,
                 'message' => 'Gagal Memesan Tiket',
             ], 401);
         }        
