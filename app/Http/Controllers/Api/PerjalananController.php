@@ -24,11 +24,16 @@ class PerjalananController extends Controller
                             ->where(DB::raw("(DATE_FORMAT(waktu_berangkat, '%Y-%m-%d'))"), '=', $tglBerangkat)
                             ->get();
         
+        $i = 0;
+        foreach($perjalanans as $perjalanan){
+            $finded[$i++] = $perjalanan->getPerjalananForUser();
+        }
+
         if($perjalanans->count() != 0){
             return response()->json([
                 'success' => true,
                 'message' => 'Perjalanan Ditemukan',
-                'Perjalanan' => $perjalanans
+                'Perjalanan' => $finded
             ], 200);
         }else{
             return response()->json([

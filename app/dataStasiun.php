@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class dataStasiun extends Model
 {
     protected $fillable = [
-        'stasiun_nama'
+        'nama', 'kode'
     ];
 
     public function perjalanan(){

@@ -15,8 +15,8 @@ class dataTiket extends Model
     public function getTiket(){
         $tiket = array(
             "tiket_id" => $this->id,
-            "waktu_berangkat" => $this->waktu_berangkat,
-            "waktu_tiba" => $this->waktu_tiba,
+            "waktu_berangkat" => $this->perjalanan->waktu_berangkat,
+            "waktu_tiba" => $this->perjalanan->waktu_tiba,
             "harga" => $this->harga,
             "status_tiket" => $this->statusTiketId->status_jenis,
             "lokasi_berangkat" => $this->perjalanan->lokasiBerangkat->stasiun_nama,
