@@ -19,8 +19,8 @@ class Perjalanan extends Model
             "kelas" => $this->dataKeretaKelas->dataKelas->kelas_nama,
             "kereta" => $this->dataKeretaKelas->dataKereta->kereta_nama,
             "harga" => $this->harga,
-            "lokasi_berangkat" => $this->lokasiBerangkat->nama,
-            "lokasi_tiba" => $this->lokasiTiba->nama,
+            "lokasi_berangkat" => $this->lokasiBerangkat,
+            "lokasi_tiba" => $this->lokasiTiba,
             "penumpang_tersedia" => $this->penumpang_tersedia
         );
         return $perjalanan;
