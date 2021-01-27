@@ -14,7 +14,8 @@ class A10DataBayisSeeder extends Seeder
         // insert data ke table data_bayis
 
         $databayis = array(
-            array('id' => 1,'nama_nik' => 'Sarada','no_nik' => NULL,'tgl_lahir' => '2020-09-15','created_at' => '2020-10-15 06:20:50','updated_at' => '2020-10-15 06:20:50')
+            array('id' => 1,'nama_nik' => 'Sarada','no_nik' => NULL,'tgl_lahir' => '2020-09-15','created_at' => '2020-10-15 06:20:50','updated_at' => '2020-10-15 06:20:50'),
+            array('id' => 2,'nama_nik' => 'Boruti','no_nik' => NULL,'tgl_lahir' => '2020-09-16','created_at' => '2020-10-15 06:20:51','updated_at' => '2020-10-15 06:20:51')
         );
         
         DB::table('data_bayis')->insert($databayis);

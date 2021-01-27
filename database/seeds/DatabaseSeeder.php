@@ -27,8 +27,9 @@ class DatabaseSeeder extends Seeder
             A11DataPenumpangsSeeder::class,
             A12DataKeretaKelasSeeder::class,
             A13DataPemesanansSeeder::class,
-            A14DataTiketsSeeder::class,
-            A15DetailPemesanansSeeder::class,
+            A14PerjalananSeeder::class,
+            A15DataTiketsSeeder::class,
+            A16DetailPemesanansSeeder::class,
         ]);
     }
 }

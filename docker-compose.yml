@@ -1,0 +1,44 @@
+version: "3.7"
+services:
+  
+  app:
+    image: nisarzz/katrips:2.0
+    container_name: katrips-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    networks:
+      - katrips
+
+  mysql:
+    image: mysql:5.7.31
+    container_name: mysql
+    restart: unless-stopped
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ./mysql:/docker-entrypoint-initdb.d
+    networks:
+      - katrips
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    restart: unless-stopped
+    ports:
+      - 8000:80
+    volumes:
+      - ./:/var/www
+      - ./nginx:/etc/nginx/conf.d/
+    networks:
+      - katrips 
+
+networks:
+  katrips:
+    name : katrips 

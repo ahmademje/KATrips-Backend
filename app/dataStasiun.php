@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class dataStasiun extends Model
 {
     protected $fillable = [
-        'stasiun_nama'
+        'nama', 'kode'
     ];
 
-    public function dataTiket(){
-        return $this->hasMany(dataTiket::class);
+    public function perjalanan(){
+        return $this->hasMany(Perjalanan::class);
     }
 }

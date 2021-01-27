@@ -11,14 +11,14 @@ class dataKeretaKelas extends Model
     ];
 
     public function dataKelas(){
-        return $this->belongsTo(dataKelas::class, 'kelas_id');
+        return $this->belongsTo(dataKelas::class, 'kelas_id', 'id');
     }
 
     public function dataKereta(){
-        return $this->belongsTo(dataKereta::class, 'kereta_id');
+        return $this->belongsTo(dataKereta::class, 'kereta_id', 'id');
     }
 
-    public function dataTiket(){
-        return $this->hasMany(dataTiket::class);
+    public function perjalanan(){
+        return $this->hasMany(Perjalanan::class, 'keretakelas_id', 'id');
     }
 }
